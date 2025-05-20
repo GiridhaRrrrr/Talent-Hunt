@@ -19,6 +19,9 @@ export const searchExperts = createAsyncThunk(
       
       // Get expert IDs associated with this domain
       const expertIds = domainDoc.expertId || [];
+
+      // const expertsResponse = await databaseServices.getExpertsByIds(domainDoc.expertId || []);
+      // const validExperts = expertsResponse?.documents || [];
       
       // Fetch all experts
       const experts = await Promise.all(

@@ -8,7 +8,7 @@ import DirectServicePage from '../pages/DirectServicePage';
 import ExtensionPage from '../pages/ExtensionPage';
 import ApiServicePage from '../pages/ApiServicePage';
 import ExpertDetailPage from '../pages/ExpertDetailPage';
-// import AccountPage from '../pages/AccountPage';
+import AccountPage from '../pages/AccountPage';
 import NotFoundPage from '../pages/PageNotFound';
 
 // Auth Guard
@@ -28,7 +28,7 @@ const ProtectedRoutes = () => {
         <Route path="extension" element={<ExtensionPage />} />
         <Route path="api-service" element={<ApiServicePage />} />
         <Route path="expert/:id" element={<ExpertDetailPage />} />
-        {/* <Route path="account" element={<AccountPage />} /> */}
+        <Route path="account" element={<AccountPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </AuthGuard>

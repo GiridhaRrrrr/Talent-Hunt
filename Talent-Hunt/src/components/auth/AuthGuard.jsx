@@ -1,5 +1,5 @@
 // src/components/auth/AuthGuard/AuthGuard.jsx
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react'; // Added useState import here
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { LoadingSpinner } from '../common';

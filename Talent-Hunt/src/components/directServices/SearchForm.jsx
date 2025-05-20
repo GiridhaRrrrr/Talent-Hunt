@@ -1,7 +1,7 @@
 // src/components/directService/SearchForm/SearchForm.jsx
 import React, { useState } from 'react';
 
-const SearchForm = ({ onSearch, loading }) => {
+export const SearchForm  = ({ onSearch, loading }) => {
   const [domain, setDomain] = useState('');
   const [keywords, setKeywords] = useState('');
 
@@ -74,4 +74,4 @@ const SearchForm = ({ onSearch, loading }) => {
   );
 };
 
-export default SearchForm;
+// export default SearchForm;

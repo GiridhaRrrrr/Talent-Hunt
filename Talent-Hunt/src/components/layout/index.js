@@ -5,8 +5,3 @@ export{
     AuthLayout,
     MainLayout
 }
-
-export default {
-    AuthLayout,
-    MainLayout
-}

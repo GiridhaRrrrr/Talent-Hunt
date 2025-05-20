@@ -69,7 +69,7 @@ const AboutPage = () => {
           </div>
           <div className="rounded-lg overflow-hidden shadow-lg">
             <img 
-              src="/mission-image.jpg" 
+              src="https://t3.ftcdn.net/jpg/05/06/32/62/360_F_506326245_2GtSGEjKLDtpHS0FSkEBs4gV34DmTtS5.jpg" 
               alt="Team collaborating" 
               className="w-full h-auto"
             />

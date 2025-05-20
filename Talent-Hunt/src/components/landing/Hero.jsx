@@ -43,7 +43,7 @@ const Hero = () => {
       <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
         <img
           className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
-          src="/hero-image.jpg"
+          src="https://thumbs.dreamstime.com/b/human-resources-agency-isolated-cartoon-vector-illustrations-set-talent-search-select-candidates-interview-human-resources-agency-350116565.jpg"
           alt="People collaborating"
         />
       </div>

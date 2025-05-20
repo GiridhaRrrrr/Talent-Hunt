@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {ConfidenceScore} from '../common';
 
-const ResultsTable = ({ results }) => {
+export const ResultsTable = ({ results }) => {
   const [sortBy, setSortBy] = useState('confidenceScore');
   const [sortDirection, setSortDirection] = useState('desc');
 
@@ -175,4 +175,4 @@ const ResultsTable = ({ results }) => {
   );
 };
 
-export default ResultsTable;
+// export default ResultsTable;

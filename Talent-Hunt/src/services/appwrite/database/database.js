@@ -90,6 +90,19 @@ export class DatabaseServices{
             }
         } 
 
+        async getExpertsByIds(ids) {
+            try {
+              return await this.database.listDocuments(
+                config.appwriteDatabaseId,
+                config.appwriteExpertCollectionId,
+                [Query.equal('$id', ids)] // Query multiple experts by IDs
+              );
+            } catch (error) {
+              console.log("Appwrite service :: getExpertsByIds :: Error", error);
+              return false;
+            }
+          }    
+
         //doamin
 
     async createDomain({title, slug, featuredImage, expertId}){

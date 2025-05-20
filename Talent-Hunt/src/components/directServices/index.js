@@ -1,24 +1,14 @@
 import DetailView from "./DetailView";
 import ExpertCard from "./ExpertCard";
 import FilterPanel from "./FilterPanel";
-import ResultsTable from "./ResultForm";
-import SearchForm from "./SearchForm";
+// import ResultsTable from "./ResultTable";
+// import SearchForm from "./SearchForm";
 import TimelineVisualization from "./TimelineVisualization";
 
-export{
+export {
     DetailView,
     ExpertCard,
     FilterPanel,
-    ResultsTable,
-    SearchForm,
-    TimelineVisualization,
+    TimelineVisualization
 }
-
-export default {
-    DetailView,
-    ExpertCard,
-    FilterPanel,
-    ResultsTable,
-    SearchForm,
-    TimelineVisualization,
-}
+// Remove the default export entirely
