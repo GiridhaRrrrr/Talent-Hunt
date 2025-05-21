@@ -2,10 +2,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {ConfidenceScore} from '../common';
+import { ConfidenceScore } from '../common';
 
 export const ResultsTable = ({ results }) => {
-  const [sortBy, setSortBy] = useState('confidenceScore');
+  const [sortBy, setSortBy] = useState('confidence');
   const [sortDirection, setSortDirection] = useState('desc');
 
   const handleSort = (column) => {
@@ -21,7 +21,7 @@ export const ResultsTable = ({ results }) => {
     const aValue = a[sortBy];
     const bValue = b[sortBy];
     
-    if (sortBy === 'confidenceScore') {
+    if (sortBy === 'confidence' || sortBy === 'experienceYears') {
       return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
     } else {
       if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
@@ -48,6 +48,12 @@ export const ResultsTable = ({ results }) => {
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
       </svg>
     );
+  };
+
+  // Helper to parse keywords from comma-separated string
+  const parseKeywords = (keywordsString) => {
+    if (!keywordsString) return [];
+    return keywordsString.split(',').map(k => k.trim()).filter(k => k);
   };
 
   const containerVariants = {
@@ -106,17 +112,37 @@ export const ResultsTable = ({ results }) => {
                   {tableSortIcon('location')}
                 </div>
               </th>
+              <th 
+                scope="col" 
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                onClick={() => handleSort('domain')}
+              >
+                <div className="flex items-center gap-1">
+                  Domain
+                  {tableSortIcon('domain')}
+                </div>
+              </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Technologies
+                Keywords
               </th>
               <th 
                 scope="col" 
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-                onClick={() => handleSort('confidenceScore')}
+                onClick={() => handleSort('confidence')}
               >
                 <div className="flex items-center gap-1">
                   Confidence
-                  {tableSortIcon('confidenceScore')}
+                  {tableSortIcon('confidence')}
+                </div>
+              </th>
+              <th 
+                scope="col" 
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                onClick={() => handleSort('experienceYears')}
+              >
+                <div className="flex items-center gap-1">
+                  Experience
+                  {tableSortIcon('experienceYears')}
                 </div>
               </th>
               <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -125,49 +151,58 @@ export const ResultsTable = ({ results }) => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {sortedResults.map((expert) => (
-              <motion.tr key={expert.$id} variants={rowVariants}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0 h-10 w-10 bg-indigo-100 rounded-full flex items-center justify-center">
-                      <span className="text-indigo-700 font-medium">{expert.name?.charAt(0) || 'E'}</span>
+            {sortedResults.map((expert) => {
+              const keywordsList = parseKeywords(expert.keywords);
+              
+              return (
+                <motion.tr key={expert.$id} variants={rowVariants}>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0 h-10 w-10 bg-indigo-100 rounded-full flex items-center justify-center">
+                        <span className="text-indigo-700 font-medium">{expert.name?.charAt(0) || 'E'}</span>
+                      </div>
+                      <div className="ml-4">
+                        <div className="text-sm font-medium text-gray-900">{expert.name}</div>
+                      </div>
                     </div>
-                    <div className="ml-4">
-                      <div className="text-sm font-medium text-gray-900">{expert.name}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{expert.location || 'N/A'}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{expert.domain || 'N/A'}</div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex flex-wrap gap-1 max-w-xs">
+                      {keywordsList.slice(0, 3).map((keyword, index) => (
+                        <span key={index} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                          {keyword}
+                        </span>
+                      ))}
+                      {keywordsList.length > 3 && (
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                          +{keywordsList.length - 3} more
+                        </span>
+                      )}
                     </div>
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{expert.location || 'N/A'}</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex flex-wrap gap-1 max-w-xs">
-                    {expert.technologies?.slice(0, 3).map((tech, index) => (
-                      <span key={index} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
-                        {tech}
-                      </span>
-                    ))}
-                    // src/components/directService/ResultsTable/ResultsTable.jsx (continued)
-                    {expert.technologies?.length > 3 && (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                        +{expert.technologies.length - 3} more
-                      </span>
-                    )}
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <ConfidenceScore score={expert.confidenceScore} />
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <Link 
-                    to={`/app/expert/${expert.$id}`} 
-                    className="text-indigo-600 hover:text-indigo-900 bg-indigo-50 px-3 py-1 rounded-md hover:bg-indigo-100 transition-colors"
-                  >
-                    View Profile
-                  </Link>
-                </td>
-              </motion.tr>
-            ))}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <ConfidenceScore score={expert.confidence} />
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{expert.experienceYears || '0'} years</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <Link 
+                      to={`/app/expert/${expert.$id}`} 
+                      className="text-indigo-600 hover:text-indigo-900 bg-indigo-50 px-3 py-1 rounded-md hover:bg-indigo-100 transition-colors"
+                    >
+                      View Profile
+                    </Link>
+                  </td>
+                </motion.tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

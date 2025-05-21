@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ConfidenceScore } from '../common';
-import  TimelineVisualization  from './TimelineVisualization';
+import TimelineVisualization from './TimelineVisualization';
 
 const DetailView = ({ expert }) => {
   if (!expert) {
@@ -35,6 +35,9 @@ const DetailView = ({ expert }) => {
     }
   };
 
+  // Parse keywords to display as technologies/skills
+  const keywordsList = expert.keywords ? expert.keywords.split(',').map(item => item.trim()) : [];
+
   return (
     <motion.div 
       className="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8"
@@ -66,7 +69,7 @@ const DetailView = ({ expert }) => {
             
             <div className="mt-4 md:mt-0 md:ml-6 flex flex-col items-start md:items-end">
               <div className="mb-2 text-gray-700">Confidence Score</div>
-              <ConfidenceScore score={expert.confidenceScore} />
+              <ConfidenceScore score={expert.confidence} />
             </div>
           </div>
           
@@ -78,49 +81,50 @@ const DetailView = ({ expert }) => {
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Professional Overview</h2>
               
               <div className="prose max-w-none mb-8">
-                <p>{expert.bio || 'No bio available'}</p>
+                <p>{expert.domain || 'No domain information available'}</p>
               </div>
               
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Experience Timeline</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Experience</h2>
               
-              <TimelineVisualization companies={expert.companies || []} />
+              <div className="bg-gray-50 p-4 rounded-lg mb-6">
+                <div className="flex items-center">
+                  <div className="text-3xl font-bold text-indigo-600">{expert.experienceYears || '0'}</div>
+                  <div className="ml-2 text-gray-700">years of experience</div>
+                </div>
+              </div>
+              
+              {/* If you still want to show the TimelineVisualization, you'll need to adapt it
+                 to work with your data model or provide sample data */}
+              {/* <TimelineVisualization companies={expert.companies || []} /> */}
             </div>
             
             <div>
               <div className="bg-gray-50 rounded-lg p-6">
-                <h2 className="text-lg font-medium text-gray-900 mb-4">Technologies & Skills</h2>
+                <h2 className="text-lg font-medium text-gray-900 mb-4">Domain & Skills</h2>
                 
-                <div className="flex flex-wrap gap-2">
-                  {expert.technologies?.map((tech, index) => (
+                <div className="mb-4">
+                  <div className="text-sm text-gray-500 mb-1">Expertise</div>
+                  <div className="text-gray-900 font-medium">{expert.domain}</div>
+                </div>
+                
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {keywordsList.map((keyword, index) => (
                     <span key={index} className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800">
-                      {tech}
+                      {keyword}
                     </span>
                   ))}
                 </div>
                 
                 <h2 className="text-lg font-medium text-gray-900 mt-6 mb-4">Contact Information</h2>
                 
-                {expert.email && (
-                  <div className="flex items-center mb-3">
-                    <svg className="h-5 w-5 text-gray-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                    <a href={`mailto:${expert.email}`} className="text-indigo-600 hover:text-indigo-800 transition-colors">
-                      {expert.email}
-                    </a>
-                  </div>
-                )}
-                
-                {expert.linkedin && (
-                  <div className="flex items-center mb-3">
-                    <svg className="h-5 w-5 text-gray-500 mr-3" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                    </svg>
-                    <a href={expert.linkedin} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-800 transition-colors">
-                      LinkedIn Profile
-                    </a>
-                  </div>
-                )}
+                <div className="flex items-center mb-3">
+                  <svg className="h-5 w-5 text-gray-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  <a href={`mailto:${expert.emailOrSocial}`} className="text-indigo-600 hover:text-indigo-800 transition-colors">
+                    {expert.emailOrSocial}
+                  </a>
+                </div>
               </div>
             </div>
           </motion.div>

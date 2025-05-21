@@ -1,6 +1,6 @@
 // src/store/expertSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { databaseServices } from "../services/appwrite";
+import {databaseServices} from "../services/appwrite";
 
 // Async thunk for fetching a single expert
 export const fetchExpert = createAsyncThunk(
@@ -31,9 +31,24 @@ export const createExpert = createAsyncThunk(
 // Async thunk for updating an expert
 export const updateExpert = createAsyncThunk(
   "expert/updateExpert",
-  async ({ slug, data }, { rejectWithValue }) => {
+  async ({ id, data }, { rejectWithValue }) => {
     try {
-      const expert = await databaseServices.updateExpert(slug, data);
+      // First get the current expert
+      const existingExpert = await databaseServices.getExpert(id);
+      if (!existingExpert) {
+        throw new Error("Expert not found");
+      }
+      
+      // Create updated expert data
+      const updatedExpert = {
+        ...existingExpert,
+        ...data
+      };
+      
+      // Delete the expert and recreate it with updated data
+      await databaseServices.deleteExpert(id);
+      const expert = await databaseServices.createExpert(updatedExpert);
+      
       return expert;
     } catch (error) {
       return rejectWithValue(error.message || "Failed to update expert");
@@ -44,10 +59,13 @@ export const updateExpert = createAsyncThunk(
 // Async thunk for deleting an expert
 export const deleteExpert = createAsyncThunk(
   "expert/deleteExpert",
-  async (slug, { rejectWithValue }) => {
+  async (id, { rejectWithValue }) => {
     try {
-      await databaseServices.deleteExpert(slug);
-      return slug;
+      const success = await databaseServices.deleteExpert(id);
+      if (!success) {
+        throw new Error("Failed to delete expert");
+      }
+      return id;
     } catch (error) {
       return rejectWithValue(error.message || "Failed to delete expert");
     }
@@ -114,11 +132,13 @@ const expertSlice = createSlice({
         state.currentExpert = action.payload;
         state.loading = false;
         // Add to recently viewed
-        const expert = action.payload;
-        state.recentlyViewed = state.recentlyViewed.filter(exp => exp.$id !== expert.$id);
-        state.recentlyViewed.unshift(expert);
-        if (state.recentlyViewed.length > 5) {
-          state.recentlyViewed = state.recentlyViewed.slice(0, 5);
+        if (action.payload) {
+          const expert = action.payload;
+          state.recentlyViewed = state.recentlyViewed.filter(exp => exp.$id !== expert.$id);
+          state.recentlyViewed.unshift(expert);
+          if (state.recentlyViewed.length > 5) {
+            state.recentlyViewed = state.recentlyViewed.slice(0, 5);
+          }
         }
       })
       .addCase(fetchExpert.rejected, (state, action) => {

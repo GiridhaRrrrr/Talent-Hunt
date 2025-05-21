@@ -2,50 +2,27 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const TimelineVisualization = ({ companies = [] }) => {
-  // Sort companies by start date (most recent first)
-  const sortedCompanies = [...companies].sort((a, b) => {
-    const dateA = new Date(a.startDate || '2000-01-01');
-    const dateB = new Date(b.startDate || '2000-01-01');
-    return dateB - dateA;
-  });
-
-  const formatDate = (dateString) => {
-    if (!dateString) return 'Present';
+const TimelineVisualization = ({ experienceYears = 0, domain = '' }) => {
+  // Generate simple timeline based on experienceYears
+  const generateTimelineItems = () => {
+    const currentYear = new Date().getFullYear();
+    const items = [];
     
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short'
+    // Create a single entry for the domain
+    items.push({
+      title: domain,
+      startYear: currentYear - experienceYears,
+      endYear: currentYear,
+      description: `${experienceYears} years of experience in ${domain}`
     });
+    
+    return items;
   };
 
-  // Calculate duration in years and months
-  const calculateDuration = (startDate, endDate) => {
-    if (!startDate) return 'Unknown duration';
-    
-    const start = new Date(startDate);
-    const end = endDate ? new Date(endDate) : new Date();
-    
-    const years = end.getFullYear() - start.getFullYear();
-    const months = end.getMonth() - start.getMonth();
-    
-    const totalMonths = years * 12 + months;
-    const displayYears = Math.floor(totalMonths / 12);
-    const displayMonths = totalMonths % 12;
-    
-    let duration = '';
-    
-    if (displayYears > 0) {
-      duration += `${displayYears} ${displayYears === 1 ? 'year' : 'years'}`;
-    }
-    
-    if (displayMonths > 0 || displayYears === 0) {
-      if (duration) duration += ', ';
-      duration += `${displayMonths} ${displayMonths === 1 ? 'month' : 'months'}`;
-    }
-    
-    return duration;
+  const timelineItems = generateTimelineItems();
+
+  const formatYear = (year) => {
+    return year.toString();
   };
 
   const itemVariants = {
@@ -59,7 +36,7 @@ const TimelineVisualization = ({ companies = [] }) => {
     }
   };
 
-  if (sortedCompanies.length === 0) {
+  if (experienceYears <= 0) {
     return (
       <div className="bg-gray-50 p-4 rounded-lg text-center text-gray-500">
         No work experience information available
@@ -71,15 +48,12 @@ const TimelineVisualization = ({ companies = [] }) => {
     <div className="mt-2 mb-8">
       <div className="flow-root">
         <ul className="-mb-8">
-          {sortedCompanies.map((company, index) => (
+          {timelineItems.map((item, index) => (
             <motion.li 
               key={index}
               variants={itemVariants}
             >
               <div className="relative pb-8">
-                {index !== sortedCompanies.length - 1 && (
-                  <span className="absolute top-5 left-5 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
-                )}
                 <div className="relative flex items-start space-x-3">
                   <div className="relative">
                     <div className="h-10 w-10 rounded-full bg-indigo-50 flex items-center justify-center ring-8 ring-white">
@@ -91,21 +65,18 @@ const TimelineVisualization = ({ companies = [] }) => {
                   <div className="min-w-0 flex-1">
                     <div>
                       <div className="text-sm">
-                        <span className="font-medium text-gray-900">{company.name || 'Unknown Company'}</span>
-                      </div>
-                      <div className="mt-0.5 text-sm text-gray-500">
-                        <span>{company.title || 'Position not specified'}</span>
+                        <span className="font-medium text-gray-900">{item.title || 'Unknown Domain'}</span>
                       </div>
                       <div className="mt-0.5 text-sm text-gray-500 flex items-center">
-                        <span className="mr-1.5">{formatDate(company.startDate)} - {formatDate(company.endDate)}</span>
+                        <span className="mr-1.5">{formatYear(item.startYear)} - {formatYear(item.endYear)}</span>
                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                          {calculateDuration(company.startDate, company.endDate)}
+                          {experienceYears} {experienceYears === 1 ? 'year' : 'years'}
                         </span>
                       </div>
                     </div>
-                    {company.description && (
+                    {item.description && (
                       <div className="mt-2 text-sm text-gray-700">
-                        <p>{company.description}</p>
+                        <p>{item.description}</p>
                       </div>
                     )}
                   </div>

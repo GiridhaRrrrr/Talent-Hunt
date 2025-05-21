@@ -9,6 +9,9 @@ export {
     DetailView,
     ExpertCard,
     FilterPanel,
-    TimelineVisualization
+    TimelineVisualization,
+    // SearchForm,
+    // ResultsTable,
+    
 }
 // Remove the default export entirely

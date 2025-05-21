@@ -1,7 +1,7 @@
 // src/components/directService/SearchForm/SearchForm.jsx
 import React, { useState } from 'react';
 
-export const SearchForm  = ({ onSearch, loading }) => {
+export const SearchForm = ({ onSearch, loading }) => {
   const [domain, setDomain] = useState('');
   const [keywords, setKeywords] = useState('');
 
@@ -11,6 +11,7 @@ export const SearchForm  = ({ onSearch, loading }) => {
       onSearch(domain.trim(), keywords.trim());
     }
   };
+  
 
   return (
     <div className="bg-white shadow-md rounded-lg p-6 max-w-4xl mx-auto">
@@ -73,5 +74,3 @@ export const SearchForm  = ({ onSearch, loading }) => {
     </div>
   );
 };
-
-// export default SearchForm;

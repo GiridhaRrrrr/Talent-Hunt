@@ -4,26 +4,8 @@ import { Link } from 'react-router-dom';
 import { ConfidenceScore } from '../common';
 
 const ExpertCard = ({ expert }) => {
-  // Calculate experience years from companies
-  const calculateExperienceYears = () => {
-    if (!expert.companies || expert.companies.length === 0) return 'N/A';
-    
-    const currentYear = new Date().getFullYear();
-    let totalYears = 0;
-    
-    expert.companies.forEach(company => {
-      if (company.startDate) {
-        const startYear = new Date(company.startDate).getFullYear();
-        const endYear = company.endDate 
-          ? new Date(company.endDate).getFullYear() 
-          : currentYear;
-        
-        totalYears += endYear - startYear;
-      }
-    });
-    
-    return `${totalYears}+ years`;
-  };
+  // Parse keywords to display as technologies
+  const keywordsList = expert.keywords ? expert.keywords.split(',').map(item => item.trim()) : [];
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
@@ -49,21 +31,21 @@ const ExpertCard = ({ expert }) => {
             <svg className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
-            <span className="text-sm text-gray-700">{calculateExperienceYears()} of experience</span>
+            <span className="text-sm text-gray-700">{expert.experienceYears || '0'}+ years of experience</span>
           </div>
           
           <p className="text-sm text-gray-600 line-clamp-3 mb-4">
-            {expert.bio || 'No bio available'}
+            {expert.domain || 'No domain information available'}
           </p>
           
           <div className="mb-4">
             <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">
-              Technologies
+              Keywords & Skills
             </h4>
             <div className="flex flex-wrap gap-1">
-              {expert.technologies?.map((tech, index) => (
+              {keywordsList.map((keyword, index) => (
                 <span key={index} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
-                  {tech}
+                  {keyword}
                 </span>
               ))}
             </div>
@@ -74,7 +56,7 @@ const ExpertCard = ({ expert }) => {
           <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">
             Confidence Score
           </h4>
-          <ConfidenceScore score={expert.confidenceScore} />
+          <ConfidenceScore score={expert.confidence} />
         </div>
       </div>
       
