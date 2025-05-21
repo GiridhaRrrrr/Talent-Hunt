@@ -9,6 +9,7 @@ import SignupPage from '../pages/SignupPage';
 import AboutPage from '../pages/AboutPage';
 import ContactPage from '../pages/ContactPage';
 import NotFoundPage from '../pages/PageNotFound';
+import UnsubscribePage from '../pages/UnsubscribePage';
 
 const PublicRoutes = () => {
   return (
@@ -18,6 +19,7 @@ const PublicRoutes = () => {
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/contact" element={<ContactPage />} />
+      <Route path="/unsubscribe" element={<UnsubscribePage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

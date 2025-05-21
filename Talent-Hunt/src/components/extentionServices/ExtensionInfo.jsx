@@ -51,7 +51,7 @@ const ExtensionInfo = () => {
         >
           <div className="bg-indigo-50 rounded-lg overflow-hidden">
             <img 
-              src="/extension-preview.png" 
+              src="https://miro.medium.com/v2/resize:fit:1400/1*J7CqaSkb9X1l-TmGH5fdBQ.png" 
               alt="Extension Preview" 
               className="w-full h-auto shadow-lg rounded-lg"
             />
