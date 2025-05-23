@@ -5,17 +5,17 @@ const client = new Client();
 const database = new Databases(client);
 
 // 🔧 Replace with your actual Appwrite credentials
-const APPWRITE_ENDPOINT = "https://fra.cloud.appwrite.io/v1"; // e.g. https://cloud.appwrite.io/v1
-const APPWRITE_PROJECT_ID = "682c288c001cd47ac189";
-const DATABASE_ID = "682c29290037eb474b61";
-const EXPERT_COLLECTION_ID = "682c2c7e002bf719fe7a";
-const SEARCH_COLLECTION_ID = "682d786d0039ffc6f1b5";
-const OPT_OUT_COLLECTION_ID = "682d7996000168f77aaa";
+const APPWRITE_ENDPOINT = "";
+const APPWRITE_PROJECT_ID = "";
+const DATABASE_ID = "";
+const EXPERT_COLLECTION_ID = "";
+const SEARCH_COLLECTION_ID = "";
+const OPT_OUT_COLLECTION_ID = "";
 
 client
 .setEndpoint(APPWRITE_ENDPOINT)
 .setProject(APPWRITE_PROJECT_ID)
-.setKey("standard_764e84262cc2edaae4a11686347998b72bc358c61d3230cb7c5e4f4ba921833c24dffaf9502fc23dba7d5adca568d039ed4c08b4f3a9eaed24ff3f7003ff3170aeb38b8aa8766fde0e00f024bc9153a75a5d5b397a092381da83fcb658e844ec06a088adad4d8fe45e1ad55b064250a8c9a4baad50c0ad8f003ee5a6b0220d61"); 
+.setKey(""); 
 
 async function insertSampleExperts() {
   const experts = [
