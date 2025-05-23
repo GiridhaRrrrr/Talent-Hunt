@@ -8,32 +8,20 @@ export const searchExperts = createAsyncThunk(
   "search/searchExperts",
   async ({ domain, keywords = "" }, { rejectWithValue }) => {
     try {
+      const normalizedDomain = domain.trim().toLowerCase();
+      const normalizedKeywords = keywords.trim().toLowerCase();
+
       // Step 1: Create a search record
-      await databaseServices.createSearch({ domain, keywords });
+      await databaseServices.createSearch({ domain: normalizedDomain, keywords: normalizedKeywords });
 
-      // Step 2: Try to get experts from Appwrite
-      const expertsResponse = await databaseServices.listExperts();
-      if (!expertsResponse || !expertsResponse.documents) {
-        return [];
-      }
+      // Step 2: Query Appwrite for experts with matching domain and keywords
+      const expertsResponse = await databaseServices.queryExperts(normalizedDomain, normalizedKeywords);
 
-      let allExperts = expertsResponse.documents;
-
-      // Step 3: Filter by domain
-      let filteredExperts = allExperts;
-      if (domain) {
-        filteredExperts = allExperts.filter((expert) =>
-          expert.domain && expert.domain.toLowerCase().includes(domain.toLowerCase())
-        );
-      }
-
-      // Step 4: If domain exists but no keyword matches, fallback to live search
-      const hasLocalMatches = filteredExperts.length > 0;
-      const keywordArray = keywords.toLowerCase().split(',').map(k => k.trim()).filter(Boolean);
-
-      if (!hasLocalMatches) {
-        const liveResults = await fetchLiveExperts({ domain, keywords });
+      if (expertsResponse.documents.length === 0) {
+        // Step 3: If not found, fetch from web
+        const liveResults = await fetchLiveExperts({ domain: normalizedDomain, keywords: normalizedKeywords });
         const savedResults = [];
+
         for (const expert of liveResults) {
           try {
             const saved = await databaseServices.createExpert(expert);
@@ -42,44 +30,39 @@ export const searchExperts = createAsyncThunk(
             console.error("Failed to save expert:", expert.name, err);
           }
         }
+
         return savedResults.sort((a, b) => b.confidenceScore - a.confidenceScore);
       }
 
-      // Step 5: Apply keyword scoring if keywords exist
-      if (keywords) {
-        const expertsWithScores = filteredExperts.map((expert) => {
-          const expertKeywords = expert.keywords
-            ? expert.keywords.toLowerCase().split(',').map((k) => k.trim())
-            : [];
+      // Step 4: Process found experts with keyword matching
+      const keywordArray = normalizedKeywords.split(',').map(k => k.trim()).filter(Boolean);
 
-          const matchingKeywords = keywordArray.filter((keyword) =>
-            expertKeywords.some((k) => k.includes(keyword) || keyword.includes(k))
-          );
+      const expertsWithScores = expertsResponse.documents.map((expert) => {
+        const expertKeywords = expert.keywords
+          ? expert.keywords.toLowerCase().split(',').map(k => k.trim())
+          : [];
 
-          const keywordScore = keywordArray.length > 0
-            ? matchingKeywords.length / keywordArray.length
-            : 0;
+        const matchingKeywords = keywordArray.filter((keyword) =>
+          expertKeywords.some(k => k.includes(keyword) || keyword.includes(k))
+        );
 
-          const yearsScore = Math.min(expert.experienceYears || 0, 10) / 10;
+        const keywordScore = keywordArray.length > 0
+          ? matchingKeywords.length / keywordArray.length
+          : 0;
 
-          const confidenceScore = Math.round((keywordScore * 0.6 + yearsScore * 0.4) * 100);
+        const yearsScore = Math.min(expert.experienceYears || 0, 10) / 10;
 
-          return {
-            ...expert,
-            confidenceScore: Math.max(expert.confidence || 0, confidenceScore)
-          };
-        });
+        const confidenceScore = Math.round((keywordScore * 0.6 + yearsScore * 0.4) * 100);
 
-        return expertsWithScores
-          .filter((expert) => expert.confidenceScore > 0)
-          .sort((a, b) => b.confidenceScore - a.confidenceScore);
-      }
+        return {
+          ...expert,
+          confidenceScore: Math.max(expert.confidence || 0, confidenceScore)
+        };
+      });
 
-      // Step 6: No keywords, return by confidence
-      return filteredExperts.map((expert) => ({
-        ...expert,
-        confidenceScore: expert.confidence || 0
-      })).sort((a, b) => b.confidenceScore - a.confidenceScore);
+      return expertsWithScores
+        .filter((expert) => expert.confidenceScore > 0)
+        .sort((a, b) => b.confidenceScore - a.confidenceScore);
     } catch (error) {
       return rejectWithValue(error.message || "Search failed");
     }

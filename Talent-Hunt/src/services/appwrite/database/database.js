@@ -75,6 +75,30 @@ export class DatabaseServices {
     }
   }
 
+  async queryExperts(domain, keywords) {
+    try {
+      const queries = [];
+  
+      if (domain) {
+        queries.push(Query.search("domain", domain));
+      }
+  
+      if (keywords) {
+        queries.push(Query.search("keywords", keywords));
+      }
+  
+      return await this.database.listDocuments(
+        config.appwriteDatabaseId,
+        config.expertCollectionId,
+        queries
+      );
+    } catch (error) {
+      console.log("Appwrite service :: queryExperts :: Error", error);
+      return { documents: [] };
+    }
+  }
+  
+
   // --- Search Operations ---
 
   async createSearch({ domain, keywords }) {
