@@ -155,7 +155,7 @@ export const ResultsTable = ({ results }) => {
               const keywordsList = parseKeywords(expert.keywords);
               
               return (
-                <motion.tr key={expert.$id} variants={rowVariants}>
+                <motion.tr key={expert.$id || expert.emailOrSocial || Math.random()} variants={rowVariants}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="flex-shrink-0 h-10 w-10 bg-indigo-100 rounded-full flex items-center justify-center">

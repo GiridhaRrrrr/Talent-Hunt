@@ -1,70 +1,82 @@
 // src/store/searchSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {databaseServices} from "../services/appwrite";
+import { databaseServices } from "../services/appwrite";
+import { fetchLiveExperts } from "../constants/expertFetcher";
 
 // Async thunk for searching experts
 export const searchExperts = createAsyncThunk(
   "search/searchExperts",
   async ({ domain, keywords = "" }, { rejectWithValue }) => {
     try {
-      // Create a search record
+      // Step 1: Create a search record
       await databaseServices.createSearch({ domain, keywords });
-      
-      // Get all experts first
+
+      // Step 2: Try to get experts from Appwrite
       const expertsResponse = await databaseServices.listExperts();
       if (!expertsResponse || !expertsResponse.documents) {
         return [];
       }
-      
+
       let allExperts = expertsResponse.documents;
-      
-      // Filter by domain if provided
+
+      // Step 3: Filter by domain
       let filteredExperts = allExperts;
       if (domain) {
-        filteredExperts = allExperts.filter(expert => 
+        filteredExperts = allExperts.filter((expert) =>
           expert.domain && expert.domain.toLowerCase().includes(domain.toLowerCase())
         );
       }
-      
-      // If keywords provided, further filter and calculate relevance
+
+      // Step 4: If domain exists but no keyword matches, fallback to live search
+      const hasLocalMatches = filteredExperts.length > 0;
+      const keywordArray = keywords.toLowerCase().split(',').map(k => k.trim()).filter(Boolean);
+
+      if (!hasLocalMatches) {
+        const liveResults = await fetchLiveExperts({ domain, keywords });
+        const savedResults = [];
+        for (const expert of liveResults) {
+          try {
+            const saved = await databaseServices.createExpert(expert);
+            savedResults.push({ ...saved, confidenceScore: expert.confidence || 0 });
+          } catch (err) {
+            console.error("Failed to save expert:", expert.name, err);
+          }
+        }
+        return savedResults.sort((a, b) => b.confidenceScore - a.confidenceScore);
+      }
+
+      // Step 5: Apply keyword scoring if keywords exist
       if (keywords) {
-        const keywordArray = keywords.toLowerCase().split(',').map(k => k.trim());
-        
-        // Process each expert with keyword relevance
-        const expertsWithScores = filteredExperts.map(expert => {
-          const expertKeywords = expert.keywords 
-            ? expert.keywords.toLowerCase().split(',').map(k => k.trim()) 
+        const expertsWithScores = filteredExperts.map((expert) => {
+          const expertKeywords = expert.keywords
+            ? expert.keywords.toLowerCase().split(',').map((k) => k.trim())
             : [];
-          
-          // Calculate keyword match
-          const matchingKeywords = keywordArray.filter(keyword => 
-            expertKeywords.some(k => k.includes(keyword) || keyword.includes(k))
+
+          const matchingKeywords = keywordArray.filter((keyword) =>
+            expertKeywords.some((k) => k.includes(keyword) || keyword.includes(k))
           );
-          
-          const keywordScore = keywordArray.length > 0 
-            ? matchingKeywords.length / keywordArray.length 
+
+          const keywordScore = keywordArray.length > 0
+            ? matchingKeywords.length / keywordArray.length
             : 0;
-          
-          // Calculate experience score (normalized to 0-1)
+
           const yearsScore = Math.min(expert.experienceYears || 0, 10) / 10;
-          
-          // Calculate final confidence score (0-100)
+
           const confidenceScore = Math.round((keywordScore * 0.6 + yearsScore * 0.4) * 100);
-          
+
           return {
             ...expert,
             confidenceScore: Math.max(expert.confidence || 0, confidenceScore)
           };
         });
-        
-        // Filter by minimum confidence and sort
+
         return expertsWithScores
-          .filter(expert => expert.confidenceScore > 0)
+          .filter((expert) => expert.confidenceScore > 0)
           .sort((a, b) => b.confidenceScore - a.confidenceScore);
       }
-      
-      // If no keywords, just sort by confidence
-      return filteredExperts.map(expert => ({
+
+      // Step 6: No keywords, return by confidence
+      return filteredExperts.map((expert) => ({
         ...expert,
         confidenceScore: expert.confidence || 0
       })).sort((a, b) => b.confidenceScore - a.confidenceScore);
@@ -75,10 +87,10 @@ export const searchExperts = createAsyncThunk(
 );
 
 const initialState = {
-  results: [],        // Search results
-  loading: false,     // Loading state
-  error: null,        // Error message
-  lastSearch: {       // Last search parameters
+  results: [],
+  loading: false,
+  error: null,
+  lastSearch: {
     domain: "",
     keywords: ""
   }
@@ -88,16 +100,13 @@ const searchSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    // Clear search results
     clearResults: (state) => {
       state.results = [];
       state.error = null;
     },
-    
-    // Set a specific expert as favorited
     favoriteExpert: (state, action) => {
       const expertId = action.payload;
-      const expert = state.results.find(exp => exp.$id === expertId);
+      const expert = state.results.find((exp) => exp.$id === expertId);
       if (expert) {
         expert.favorited = !expert.favorited;
       }
