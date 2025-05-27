@@ -13,7 +13,7 @@ export const searchExperts = createAsyncThunk(
       await databaseServices.createSearch({ domain: normalizedDomain, keywords: normalizedKeywords });
 
       //Query Appwrite for experts with matching domain and keywords
-      const expertsResponse = await databaseServices(normalizedDomain, normalizedKeywords);
+      const expertsResponse = await databaseServices. queryExperts(normalizedDomain, normalizedKeywords);
 
       if (expertsResponse.documents.length === 0) {
         //If not found, fetch from web ie make the api calls our main part
