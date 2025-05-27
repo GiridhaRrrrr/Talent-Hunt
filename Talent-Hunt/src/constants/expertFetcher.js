@@ -12,6 +12,8 @@ export const fetchLiveExperts = async ({ domain, keywords }) => {
   const googleResults = await fetchLinkedInProfiles(domain, keywords);
 
   const experts = await Promise.all(
+    //promise.all because we get a array of promises from the below function all of them will be resolved onces
+    //if we dont use promise.all all will be executed one by one will consume lot of time
     googleResults.map(async (item) => {
       const url = item.link;
       if (/linkedin\.com\/(in|pub)\//.test(url)) {
@@ -98,7 +100,7 @@ function extractLocation(snippet) {
 }
 
 function calculateLinkedInConfidence(item, experienceYears, keywords) {
-  let score = 50 + (experienceYears * 3);
+  let score = 50 + (experienceYears * 3); //50 is base score for confidence
 
   if (typeof keywords === 'string') {
     const keywordHits = keywords.split(',')

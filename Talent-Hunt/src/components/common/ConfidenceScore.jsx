@@ -1,8 +1,6 @@
-// src/components/common/ConfidenceScore/ConfidenceScore.jsx
 import React from 'react';
 
 const ConfidenceScore = ({ score }) => {
-  // Determine color based on score
   const getColorClass = () => {
     if (score >= 80) return 'text-green-600 bg-green-100';
     if (score >= 60) return 'text-yellow-600 bg-yellow-100';

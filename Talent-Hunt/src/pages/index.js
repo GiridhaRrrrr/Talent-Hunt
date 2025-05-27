@@ -1,5 +1,3 @@
-// src/pages/index.js
-// Import individual pages
 import LandingPage from './LandingPage';
 import LoginPage from './LoginPage';
 import SignupPage from './SignupPage';

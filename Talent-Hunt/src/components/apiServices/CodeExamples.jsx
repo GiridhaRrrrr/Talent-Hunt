@@ -1,4 +1,3 @@
-// src/components/apiService/CodeExamples/CodeExamples.jsx
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
@@ -17,7 +16,7 @@ const CodeExamples = () => {
       search: `// Using fetch API
 const searchExperts = async (domain, keywords) => {
   try {
-    const response = await fetch(\`https://api.veterantalentfinder.com/api/experts/search?domain=\${encodeURIComponent(domain)}&keywords=\${encodeURIComponent(keywords)}\`, {
+    const response = await fetch(\`https://api.ProFound.com/api/experts/search?domain=\${encodeURIComponent(domain)}&keywords=\${encodeURIComponent(keywords)}\`, {
       method: 'GET',
       headers: {
         'Authorization': 'Bearer YOUR_API_KEY',
@@ -49,7 +48,7 @@ searchExperts('Cybersecurity', 'Python,Cloud Security')
       getDetail: `// Using fetch API
 const getExpertDetail = async (expertId) => {
   try {
-    const response = await fetch(\`https://api.veterantalentfinder.com/api/experts/\${expertId}\`, {
+    const response = await fetch(\`https://api.ProFound.com/api/experts/\${expertId}\`, {
       method: 'GET',
       headers: {
         'Authorization': 'Bearer YOUR_API_KEY',
@@ -82,7 +81,7 @@ getExpertDetail('expert-123')
       verify: `// Using fetch API
 const verifyExperience = async (experienceData) => {
   try {
-    const response = await fetch('https://api.veterantalentfinder.com/api/verify/experience', {
+    const response = await fetch('https://api.ProFound.com/api/verify/experience', {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer YOUR_API_KEY',
@@ -134,7 +133,7 @@ import urllib.parse
 
 def search_experts(domain, keywords=None):
     try:
-        url = f"https://api.veterantalentfinder.com/api/experts/search?domain={urllib.parse.quote(domain)}"
+        url = f"https://api.ProFound.com/api/experts/search?domain={urllib.parse.quote(domain)}"
         
         if keywords:
             url += f"&keywords={urllib.parse.quote(keywords)}"
@@ -171,7 +170,7 @@ import requests
 
 def get_expert_detail(expert_id):
     try:
-        url = f"https://api.veterantalentfinder.com/api/experts/{expert_id}"
+        url = f"https://api.ProFound.com/api/experts/{expert_id}"
             
         headers = {
             "Authorization": "Bearer YOUR_API_KEY",
@@ -211,7 +210,7 @@ import requests
 
 def verify_experience(experience_data):
     try:
-        url = "https://api.veterantalentfinder.com/api/verify/experience"
+        url = "https://api.ProFound.com/api/verify/experience"
             
         headers = {
             "Authorization": "Bearer YOUR_API_KEY",
@@ -255,7 +254,7 @@ except Exception as e:
       search: `<?php
 // Using cURL
 function searchExperts($domain, $keywords = null) {
-    $url = "https://api.veterantalentfinder.com/api/experts/search?domain=" . urlencode($domain);
+    $url = "https://api.ProFound.com/api/experts/search?domain=" . urlencode($domain);
     
     if ($keywords) {
         $url .= "&keywords=" . urlencode($keywords);
@@ -301,7 +300,7 @@ try {
       getDetail: `<?php
 // Using cURL
 function getExpertDetail($expertId) {
-    $url = "https://api.veterantalentfinder.com/api/experts/" . $expertId;
+    $url = "https://api.ProFound.com/api/experts/" . $expertId;
     
     $ch = curl_init($url);
     
@@ -350,7 +349,7 @@ try {
       verify: `<?php
 // Using cURL
 function verifyExperience($experienceData) {
-    $url = "https://api.veterantalentfinder.com/api/verify/experience";
+    $url = "https://api.ProFound.com/api/verify/experience";
     
     $ch = curl_init($url);
     
@@ -408,7 +407,7 @@ require 'uri'
 
 def search_experts(domain, keywords = nil)
   begin
-    url = "https://api.veterantalentfinder.com/api/experts/search?domain=#{URI.encode_www_form_component(domain)}"
+    url = "https://api.ProFound.com/api/experts/search?domain=#{URI.encode_www_form_component(domain)}"
     
     if keywords
       url += "&keywords=#{URI.encode_www_form_component(keywords)}"
@@ -450,7 +449,7 @@ require 'httparty'
 
 def get_expert_detail(expert_id)
   begin
-    url = "https://api.veterantalentfinder.com/api/experts/#{expert_id}"
+    url = "https://api.ProFound.com/api/experts/#{expert_id}"
     
     headers = {
       'Authorization' => 'Bearer YOUR_API_KEY',
@@ -494,7 +493,7 @@ require 'httparty'
 
 def verify_experience(experience_data)
   begin
-    url = "https://api.veterantalentfinder.com/api/verify/experience"
+    url = "https://api.ProFound.com/api/verify/experience"
     
     headers = {
       'Authorization' => 'Bearer YOUR_API_KEY',

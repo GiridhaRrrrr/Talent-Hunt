@@ -1,4 +1,3 @@
-// src/components/directService/FilterPanel/FilterPanel.jsx
 import React, { useState } from 'react';
 
 const FilterPanel = ({ 
@@ -19,7 +18,6 @@ const FilterPanel = ({
     sorting: true
   });
   
-  // Toggle section expansion
   const toggleSection = (section) => {
     setExpanded(prev => ({
       ...prev,
@@ -27,63 +25,52 @@ const FilterPanel = ({
     }));
   };
   
-  // Handle confidence score slider
   const handleConfidenceChange = (e) => {
     onChange({ minConfidence: parseInt(e.target.value, 10) });
   };
   
-  // Handle domain checkbox
   const handleDomainChange = (domain) => {
     const newDomains = [...filters.domains];
     
     if (newDomains.includes(domain)) {
-      // Remove domain
       onChange({ 
         domains: newDomains.filter(d => d !== domain) 
       });
     } else {
-      // Add domain
       onChange({ 
         domains: [...newDomains, domain] 
       });
     }
   };
   
-  // Handle keyword checkbox
   const handleKeywordChange = (keyword) => {
     const newKeywords = [...filters.keywords];
     
     if (newKeywords.includes(keyword)) {
-      // Remove keyword
       onChange({ 
         keywords: newKeywords.filter(k => k !== keyword) 
       });
     } else {
-      // Add keyword
       onChange({ 
         keywords: [...newKeywords, keyword] 
       });
     }
   };
   
-  // Handle location checkbox
   const handleLocationChange = (location) => {
     const newLocations = [...filters.locations];
     
     if (newLocations.includes(location)) {
-      // Remove location
       onChange({ 
         locations: newLocations.filter(l => l !== location) 
       });
     } else {
-      // Add location
       onChange({ 
         locations: [...newLocations, location] 
       });
     }
   };
   
-  // Handle sort option selection
   const handleSortClick = (field) => {
     onSortChange(field);
   };
@@ -92,7 +79,6 @@ const FilterPanel = ({
     <div className="bg-white shadow-md rounded-lg p-4">
       <h2 className="text-lg font-medium text-gray-900 mb-4">Filter Results</h2>
       
-      {/* Confidence Score Filter */}
       <div className="mb-6">
         <div 
           className="flex items-center justify-between cursor-pointer"
@@ -142,7 +128,6 @@ const FilterPanel = ({
         )}
       </div>
       
-      {/* Domains Filter */}
       <div className="mb-6">
         <div 
           className="flex items-center justify-between cursor-pointer"
@@ -205,7 +190,6 @@ const FilterPanel = ({
         )}
       </div>
       
-      {/* Keywords Filter */}
       <div className="mb-6">
         <div 
           className="flex items-center justify-between cursor-pointer"
@@ -268,7 +252,6 @@ const FilterPanel = ({
         )}
       </div>
       
-      {/* Locations Filter */}
       <div className="mb-6">
         <div 
           className="flex items-center justify-between cursor-pointer"
@@ -331,7 +314,6 @@ const FilterPanel = ({
         )}
       </div>
       
-      {/* Sorting Options */}
       <div>
         <div 
           className="flex items-center justify-between cursor-pointer"

@@ -1,4 +1,3 @@
-// src/utils/slugify.js
 /**
  * Convert a string to a URL-friendly slug
  * @param {string} text - Text to convert to slug

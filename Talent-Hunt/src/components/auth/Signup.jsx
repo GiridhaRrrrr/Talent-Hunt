@@ -1,4 +1,3 @@
-// src/components/auth/Signup/Signup.jsx
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
@@ -21,7 +20,6 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   
-  // Track field focus states for animation
   const [focusedField, setFocusedField] = useState(null);
 
   const handleChange = (e) => {
@@ -35,7 +33,6 @@ const Signup = () => {
     e.preventDefault();
     setError('');
     
-    // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       return;
@@ -85,7 +82,6 @@ const Signup = () => {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           <div className="lg:col-span-3">
             <form className="space-y-6" onSubmit={handleSubmit}>
-              {/* Username Field */}
               <div className="relative">
                 <label 
                   htmlFor="userName" 
@@ -122,7 +118,6 @@ const Signup = () => {
                 </p>
               </div>
 
-              {/* Email Field */}
               <div className="relative">
                 <label 
                   htmlFor="email" 
@@ -160,7 +155,6 @@ const Signup = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Password Field */}
                 <div className="relative">
                   <label 
                     htmlFor="password" 
@@ -205,7 +199,6 @@ const Signup = () => {
                   </p>
                 </div>
 
-                {/* Confirm Password Field */}
                 <div className="relative">
                   <label 
                     htmlFor="confirmPassword" 

@@ -13,7 +13,7 @@ export class DatabaseServices {
     this.database = new Databases(this.client);
   }
 
-  // --- Expert Operations ---
+  // Expert
 
   async createExpert({ name, emailOrSocial, location, domain, keywords, confidence, experienceYears }) {
     try {
@@ -99,7 +99,7 @@ export class DatabaseServices {
   }
   
 
-  // --- Search Operations ---
+  // Search 
 
   async createSearch({ domain, keywords }) {
     try {
@@ -118,7 +118,7 @@ export class DatabaseServices {
     }
   }
 
-  // --- Opt-Out Operations ---
+  //Opt-Out
 
   async createOptOut({ nameOrEmail, reason }) {
     try {

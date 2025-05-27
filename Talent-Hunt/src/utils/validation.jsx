@@ -1,4 +1,3 @@
-// src/utils/validation.js
 /**
  * Email validation using a regular expression
  * @param {string} email - Email to validate

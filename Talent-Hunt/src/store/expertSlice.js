@@ -1,8 +1,10 @@
-// src/store/expertSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {databaseServices} from "../services/appwrite";
 
-// Async thunk for fetching a single expert
+// for Asyncronous calls we use createAsyncThunk and as redux toolkit is syncrounous handling asyncronous 
+//calls can be made easy by these it needs a string action type prefix like expert/fetchExpert
+// for 3 states pending , success and rejected and this function auto dispatches the sucess and rejection to the state and action where the slice is present
+//these functions are called Async thunk 
 export const fetchExpert = createAsyncThunk(
   "expert/fetchExpert",
   async (id, { rejectWithValue }) => {
@@ -15,7 +17,6 @@ export const fetchExpert = createAsyncThunk(
   }
 );
 
-// Async thunk for creating a new expert
 export const createExpert = createAsyncThunk(
   "expert/createExpert",
   async (expertData, { rejectWithValue }) => {
@@ -28,24 +29,20 @@ export const createExpert = createAsyncThunk(
   }
 );
 
-// Async thunk for updating an expert
 export const updateExpert = createAsyncThunk(
   "expert/updateExpert",
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      // First get the current expert
       const existingExpert = await databaseServices.getExpert(id);
       if (!existingExpert) {
         throw new Error("Expert not found");
       }
       
-      // Create updated expert data
       const updatedExpert = {
         ...existingExpert,
         ...data
       };
       
-      // Delete the expert and recreate it with updated data
       await databaseServices.deleteExpert(id);
       const expert = await databaseServices.createExpert(updatedExpert);
       
@@ -56,7 +53,6 @@ export const updateExpert = createAsyncThunk(
   }
 );
 
-// Async thunk for deleting an expert
 export const deleteExpert = createAsyncThunk(
   "expert/deleteExpert",
   async (id, { rejectWithValue }) => {
@@ -76,15 +72,14 @@ const initialState = {
   currentExpert: null,   // Currently viewed expert
   favorites: [],         // Favorited experts
   recentlyViewed: [],    // Recently viewed experts
-  loading: false,        // Loading state
-  error: null            // Error message
+  loading: false,        // for Loading state
+  error: null            // for Error message
 };
 
 const expertSlice = createSlice({
   name: "expert",
   initialState,
   reducers: {
-    // Add expert to favorites
     addToFavorites: (state, action) => {
       const expert = action.payload;
       if (!state.favorites.some(fav => fav.$id === expert.$id)) {
@@ -92,13 +87,11 @@ const expertSlice = createSlice({
       }
     },
     
-    // Remove expert from favorites
     removeFromFavorites: (state, action) => {
       const expertId = action.payload;
       state.favorites = state.favorites.filter(expert => expert.$id !== expertId);
     },
     
-    // Add to recently viewed
     addToRecentlyViewed: (state, action) => {
       const expert = action.payload;
       // Remove if already exists to avoid duplicates
@@ -111,12 +104,10 @@ const expertSlice = createSlice({
       }
     },
     
-    // Clear current expert
     clearCurrentExpert: (state) => {
       state.currentExpert = null;
     },
     
-    // Clear error
     clearError: (state) => {
       state.error = null;
     }

@@ -1,4 +1,3 @@
-// src/pages/ExtensionPage/ExtensionPage.jsx
 import React from 'react';
 import { MainLayout } from '../components/layout';
 import { ExtensionInfo } from '../components/extentionServices';

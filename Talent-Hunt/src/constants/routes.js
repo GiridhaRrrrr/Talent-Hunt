@@ -1,7 +1,3 @@
-// src/constants/routes.js
-/**
- * Application route paths
- */
 const ROUTES = {
     // Public Routes
     HOME: '/',

@@ -1,4 +1,3 @@
-// src/pages/LandingPage/LandingPage.jsx
 import React from 'react';
 import { Hero } from '../components/landing';
 import { ServiceOptions } from '../components/landing';

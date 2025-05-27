@@ -1,4 +1,3 @@
-// src/components/directService/DetailView/DetailView.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ConfidenceScore } from '../common';
@@ -35,7 +34,6 @@ const DetailView = ({ expert }) => {
     }
   };
 
-  // Parse keywords to display as technologies/skills
   const keywordsList = expert.keywords ? expert.keywords.split(',').map(item => item.trim()) : [];
 
   return (

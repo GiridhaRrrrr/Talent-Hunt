@@ -1,4 +1,3 @@
-// src/components/common/Input/Input.jsx
 import React, { useState } from 'react';
 
 const Input = ({

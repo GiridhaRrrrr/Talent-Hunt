@@ -1,4 +1,3 @@
-// src/pages/NotFoundPage/NotFoundPage.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MainLayout } from '../components/layout';
@@ -10,8 +9,8 @@ const NotFoundPage = () => {
         <main className="flex-grow flex flex-col justify-center max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex-shrink-0 flex justify-center">
             <Link to="/" className="inline-flex">
-              <span className="sr-only">Veteran Talent Finder</span>
-              <img className="h-12 w-auto" src="/logo.svg" alt="Veteran Talent Finder" />
+              <span className="sr-only">ProFound</span>
+              <img className="h-12 w-auto" src="/logo.svg" alt="ProFound" />
             </Link>
           </div>
           <div className="py-16">

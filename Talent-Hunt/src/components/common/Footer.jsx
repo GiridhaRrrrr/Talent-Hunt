@@ -1,4 +1,3 @@
-// src/components/common/Footer/Footer.jsx
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -82,7 +81,7 @@ const Footer = () => {
         
         <div className="mt-8 pt-8 border-t border-gray-700">
           <p className="text-center text-gray-400">
-            © {new Date().getFullYear()} Veteran Talent Finder. All rights reserved.
+            © {new Date().getFullYear()} ProFound. All rights reserved.
           </p>
         </div>
       </div>

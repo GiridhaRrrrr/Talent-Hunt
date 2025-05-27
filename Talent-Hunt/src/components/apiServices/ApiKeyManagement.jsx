@@ -86,10 +86,12 @@ const ApiKeyManagement = () => {
         </div>
         
         <div className="mt-4 flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0">
-          <button className="px-4 py-2 bg-indigo-50 text-indigo-700 rounded-md hover:bg-indigo-100 transition-colors">
+          <button className="px-4 py-2 bg-indigo-50 text-indigo-700 rounded-md hover:bg-indigo-100 transition-colors"
+          onClick={handleCopyApiKey}>
             Regenerate API Key
           </button>
-          <button className="px-4 py-2 bg-red-50 text-red-700 rounded-md hover:bg-red-100 transition-colors">
+          <button className="px-4 py-2 bg-red-50 text-red-700 rounded-md hover:bg-red-100 transition-colors"
+          onClick={handleCopyApiKey}>
             Revoke API Key
           </button>
         </div>

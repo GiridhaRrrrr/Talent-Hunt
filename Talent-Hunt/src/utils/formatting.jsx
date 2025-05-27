@@ -1,4 +1,3 @@
-// src/utils/formatting.js
 /**
  * Format a date string to a readable format
  * @param {string} dateString - ISO date string

@@ -1,4 +1,3 @@
-// src/utils/timelineUtils.js
 /**
  * Sort company experiences by start date (most recent first)
  * @param {Array} companies - Array of company objects with startDate property

@@ -1,4 +1,3 @@
-// src/pages/ExpertDetailPage/ExpertDetailPage.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -13,7 +12,6 @@ const ExpertDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
-  // Check if we already have the expert in the search results
   const { results } = useSelector(state => state.search);
   
   useEffect(() => {

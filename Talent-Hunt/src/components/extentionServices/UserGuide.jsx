@@ -31,7 +31,7 @@ const UsageGuide = () => {
         },
         {
           title: 'Sign in to Your Account',
-          description: 'Click the extension icon and sign in with your Veteran Talent Finder account.'
+          description: 'Click the extension icon and sign in with your ProFound account.'
         }
       ]
     },

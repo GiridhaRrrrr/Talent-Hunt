@@ -1,4 +1,3 @@
-// src/utils/confidenceScoreCalculator.js
 /**
  * Calculate confidence score based on various factors
  * @param {Object} expert - Expert data object

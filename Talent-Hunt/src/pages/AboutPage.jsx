@@ -1,4 +1,3 @@
-// src/pages/AboutPage/AboutPage.jsx
 import React from 'react';
 import { MainLayout } from '../components/layout';
 import { motion } from 'framer-motion';
@@ -57,7 +56,7 @@ const AboutPage = () => {
           <div>
             <h2 className="text-3xl font-extrabold text-gray-900">Our Mission</h2>
             <p className="mt-4 text-lg text-gray-600">
-              At Veteran Talent Finder, we believe that true expertise comes from experience. 
+              At ProFound, we believe that true expertise comes from experience. 
               Our mission is to connect people with genuine domain experts who have proven 
               track records of at least 10 years in their fields.
             </p>
@@ -83,7 +82,7 @@ const AboutPage = () => {
           <h2 className="text-3xl font-extrabold text-gray-900 mb-8 text-center">Our Story</h2>
           <div className="prose prose-lg max-w-none text-gray-600">
             <p>
-              Veteran Talent Finder was founded in 2022 by a group of technology and HR professionals 
+              ProFound was founded in 2024 by a Giridhar and team 
               who were frustrated with the challenge of identifying real experts. Too often, hiring managers 
               and teams waste valuable time interviewing candidates who claimed expertise but couldn't 
               demonstrate the deep experience needed.

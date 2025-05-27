@@ -1,4 +1,3 @@
-// src/components/directService/ExpertCard/ExpertCard.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ConfidenceScore } from '../common';

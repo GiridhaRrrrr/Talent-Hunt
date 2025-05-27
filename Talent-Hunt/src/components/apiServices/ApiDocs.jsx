@@ -1,5 +1,4 @@
-// src/components/apiService/ApiDocs/ApiDocs.jsx
-import React from 'react';
+  import React from 'react';
 import { motion } from 'framer-motion';
 
 const ApiDocs = () => {

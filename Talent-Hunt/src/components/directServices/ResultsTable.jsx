@@ -1,4 +1,3 @@
-// src/components/directServices/ResultsTable.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -50,31 +49,26 @@ export const ResultsTable = ({ results }) => {
     );
   };
 
-  // Helper to parse keywords from comma-separated string
   const parseKeywords = (keywordsString) => {
     if (!keywordsString) return [];
     return keywordsString.split(',').map(k => k.trim()).filter(k => k);
   };
 
-  // Helper to check if emailOrSocial is a LinkedIn URL
   const isLinkedInUrl = (url) => {
     if (!url) return false;
     return url.toLowerCase().includes('linkedin.com');
   };
 
-  // Helper to check if emailOrSocial is a GitHub URL
   const isGitHubUrl = (url) => {
     if (!url) return false;
     return url.toLowerCase().includes('github.com');
   };
 
-  // Helper to check if emailOrSocial is a Google Scholar URL
   const isGoogleScholarUrl = (url) => {
     if (!url) return false;
     return url.toLowerCase().includes('scholar.google.com');
   };
 
-  // Helper to format LinkedIn URL
   const formatLinkedInUrl = (emailOrSocial) => {
     if (!emailOrSocial) return '#';
     
@@ -101,12 +95,10 @@ export const ResultsTable = ({ results }) => {
     return '#';
   };
 
-  // Static GitHub link as requested
   const getGitHubUrl = () => {
     return 'https://github.com/GiridhaRrrrr';
   };
 
-  // Static Google Scholar link
   const getGoogleScholarUrl = () => {
     return 'https://github.com/GiridhaRrrrr';
   };

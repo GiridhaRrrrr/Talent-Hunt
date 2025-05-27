@@ -1,4 +1,3 @@
-// src/components/extensionService/ExtensionInfo/ExtensionInfo.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
 
