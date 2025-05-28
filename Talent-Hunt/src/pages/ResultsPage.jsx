@@ -1,7 +1,8 @@
-// src/pages/ResultsPage/ResultsPage.jsx
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+// The useLocation hook gives you access to the location object from React Router.
+// The location object represents the current URL in the browser and provides various pieces of information about it.
 import { MainLayout } from '../components/layout';
 import { ExpertCard } from '../components/directService';
 import { FilterPanel } from '../components/directService';
@@ -15,12 +16,11 @@ const ResultsPage = () => {
   const location = useLocation();
   const { results, loading, error, lastSearch } = useSelector(state => state.search);
   
-  // Get search params from URL
-  const queryParams = new URLSearchParams(location.search);
+  const queryParams = new URLSearchParams(location.search);//search: A string representing the URL's query parameters, including the leading ? (e.g., ?category=electronics&page=2).
+  // Creates a URLSearchParams object, It provides a convenient way to work with the query string of a URL. You can parse it, add parameters, remove parameters, and retrieve specific parameter values. its part of js
   const domain = queryParams.get('domain') || '';
   const keywords = queryParams.get('keywords') || '';
   
-  // Filtering and sorting state
   const [filteredResults, setFilteredResults] = useState([]);
   const [filters, setFilters] = useState({
     minConfidence: 0,
@@ -30,33 +30,27 @@ const ResultsPage = () => {
   const [sortBy, setSortBy] = useState('confidenceScore');
   const [sortOrder, setSortOrder] = useState('desc');
   
-  // Perform search if direct URL access with params
   useEffect(() => {
     if (domain && results.length === 0 && !loading) {
       dispatch(searchExperts({ domain, keywords }));
     }
   }, [domain, keywords, dispatch, results.length, loading]);
   
-  // Handle search results filtering and sorting
   useEffect(() => {
     if (results.length === 0) return;
     
-    // Apply filters
     let filtered = [...results];
     
-    // Filter by confidence score
     if (filters.minConfidence > 0) {
       filtered = filtered.filter(expert => expert.confidenceScore >= filters.minConfidence);
     }
     
-    // Filter by locations
     if (filters.locations.length > 0) {
       filtered = filtered.filter(expert => 
         expert.location && filters.locations.includes(expert.location)
       );
     }
     
-    // Filter by technologies
     if (filters.technologies.length > 0) {
       filtered = filtered.filter(expert => {
         const expertTechs = expert.technologies.map(tech => tech.toLowerCase());
@@ -66,12 +60,10 @@ const ResultsPage = () => {
       });
     }
     
-    // Apply sorting
     filtered.sort((a, b) => {
       let aValue = a[sortBy];
       let bValue = b[sortBy];
       
-      // Special handling for location (string comparison)
       if (sortBy === 'location') {
         aValue = a.location || '';
         bValue = b.location || '';
@@ -80,14 +72,12 @@ const ResultsPage = () => {
           : bValue.localeCompare(aValue);
       }
       
-      // Number comparison
       return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
     });
     
     setFilteredResults(filtered);
   }, [results, filters, sortBy, sortOrder]);
   
-  // Extract all available technologies and locations for filters
   const availableTechnologies = React.useMemo(() => {
     if (results.length === 0) return [];
     
@@ -114,7 +104,6 @@ const ResultsPage = () => {
     return Array.from(locationSet).sort();
   }, [results]);
   
-  // Handle filter changes
   const handleFilterChange = (newFilters) => {
     setFilters(prev => ({
       ...prev,
@@ -122,19 +111,15 @@ const ResultsPage = () => {
     }));
   };
   
-  // Handle sort changes
   const handleSortChange = (field) => {
     if (sortBy === field) {
-      // Toggle sort order if same field
       setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
     } else {
-      // New field, reset to descending order
       setSortBy(field);
       setSortOrder('desc');
     }
   };
   
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -212,7 +197,6 @@ const ResultsPage = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {/* Filters sidebar */}
             <div className="lg:col-span-1">
               <FilterPanel 
                 filters={filters}
@@ -225,7 +209,6 @@ const ResultsPage = () => {
               />
             </div>
             
-            {/* Results grid */}
             <div className="lg:col-span-3">
               {filteredResults.length === 0 ? (
                 <div className="bg-white rounded-lg shadow p-6 text-center">

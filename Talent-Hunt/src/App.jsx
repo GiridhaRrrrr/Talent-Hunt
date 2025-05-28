@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider, useDispatch } from 'react-redux';
@@ -8,7 +7,7 @@ import { authServices } from './services/appwrite';
 // import { logIn } from './store/AuthSlice.js ';
 import { logIn } from './store/AuthSlice.js';
 
-// Auth initialization component
+// for checking and updating the state is user logged in or not
 const AuthInitializer = ({ children }) => {
   const dispatch = useDispatch();
 

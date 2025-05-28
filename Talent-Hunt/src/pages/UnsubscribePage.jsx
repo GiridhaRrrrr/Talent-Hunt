@@ -1,4 +1,3 @@
-// src/pages/UnsubscribePage.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,10 +20,8 @@ const UnsubscribePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Show unsubscribed animation
     setShowAnimation(true);
     
-    // After animation, redirect to home page
     setTimeout(() => {
       navigate('/');
     }, 2000);

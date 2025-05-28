@@ -1,7 +1,3 @@
-// src/constants/apiEndpoints.js
-/**
- * API endpoint paths
- */
 const API_ENDPOINTS = {
     // Auth endpoints
     LOGIN: '/auth/login',

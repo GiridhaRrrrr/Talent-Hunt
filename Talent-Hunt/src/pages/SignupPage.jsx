@@ -1,4 +1,3 @@
-// src/pages/SignupPage/SignupPage.jsx
 import React from 'react';
 import { AuthLayout } from '../components/layout';
 import { Signup } from '../components/auth';

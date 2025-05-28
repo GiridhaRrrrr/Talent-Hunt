@@ -1,9 +1,7 @@
-// src/store/searchSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { databaseServices } from "../services/appwrite";
 import { fetchLiveExperts } from "../constants/expertFetcher";
 
-// Async thunk for searching experts
 export const searchExperts = createAsyncThunk(
   "search/searchExperts",
   async ({ domain, keywords = "" }, { rejectWithValue }) => {
@@ -11,14 +9,14 @@ export const searchExperts = createAsyncThunk(
       const normalizedDomain = domain.trim().toLowerCase();
       const normalizedKeywords = keywords.trim().toLowerCase();
 
-      // Step 1: Create a search record
+      //Create a search record and search model
       await databaseServices.createSearch({ domain: normalizedDomain, keywords: normalizedKeywords });
 
-      // Step 2: Query Appwrite for experts with matching domain and keywords
+      //Query Appwrite for experts with matching domain and keywords
       const expertsResponse = await databaseServices.queryExperts(normalizedDomain, normalizedKeywords);
 
       if (expertsResponse.documents.length === 0) {
-        // Step 3: If not found, fetch from web
+        //If not found, fetch from web ie make the api calls our main part
         const liveResults = await fetchLiveExperts({ domain: normalizedDomain, keywords: normalizedKeywords });
         const savedResults = [];
 
@@ -34,7 +32,7 @@ export const searchExperts = createAsyncThunk(
         return savedResults.sort((a, b) => b.confidenceScore - a.confidenceScore);
       }
 
-      // Step 4: Process found experts with keyword matching
+      //Process found experts with keyword matching
       const keywordArray = normalizedKeywords.split(',').map(k => k.trim()).filter(Boolean);
 
       const expertsWithScores = expertsResponse.documents.map((expert) => {

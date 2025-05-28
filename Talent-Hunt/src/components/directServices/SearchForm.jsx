@@ -1,4 +1,3 @@
-// src/components/directService/SearchForm/SearchForm.jsx
 import React, { useState } from 'react';
 
 export const SearchForm = ({ onSearch, loading }) => {

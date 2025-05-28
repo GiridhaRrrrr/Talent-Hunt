@@ -23,21 +23,18 @@ const DirectServicePage = () => {
   const [availableKeywords, setAvailableKeywords] = useState([]);
   const [availableLocations, setAvailableLocations] = useState([]);
 
-  // Extract unique values for filters when results change
   useEffect(() => {
     if (results?.length > 0) {
-      // Extract unique domains
+      //.filter(boolean) to remove the null and undefined and Set for unique values
       const domains = [...new Set(results.map(expert => expert.domain).filter(Boolean))];
       setAvailableDomains(domains);
 
-      // Extract and parse unique keywords
       const allKeywords = results
         .map(expert => expert.keywords || '')
         .flatMap(kwString => kwString.split(',').map(kw => kw.trim()))
         .filter(Boolean);
       setAvailableKeywords([...new Set(allKeywords)]);
 
-      // Extract unique locations
       const locations = [...new Set(results.map(expert => expert.location).filter(Boolean))];
       setAvailableLocations(locations);
     }
@@ -64,19 +61,15 @@ const DirectServicePage = () => {
     }
   };
 
-  // Apply filters to results
   const filteredResults = results.filter(expert => {
-    // Filter by confidence score
     if (expert.confidence < filters.minConfidence) {
       return false;
     }
 
-    // Filter by domains
     if (filters.domains?.length > 0 && !filters.domains.includes(expert.domain)) {
       return false;
     }
 
-    // Filter by keywords
     if (filters.keywords?.length > 0) {
       const expertKeywords = (expert.keywords || '').split(',').map(kw => kw.trim());
       if (!filters.keywords.some(kw => expertKeywords.includes(kw))) {
@@ -84,7 +77,6 @@ const DirectServicePage = () => {
       }
     }
 
-    // Filter by locations
     if (filters.locations?.length > 0 && !filters.locations.includes(expert.location)) {
       return false;
     }

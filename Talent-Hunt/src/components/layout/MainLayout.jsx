@@ -1,4 +1,3 @@
-// src/components/layout/MainLayout/MainLayout.jsx
 import React from 'react';
 import {Navbar} from '../common';
 import {Footer} from '../common';

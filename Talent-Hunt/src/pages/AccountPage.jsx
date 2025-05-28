@@ -1,4 +1,3 @@
-// src/pages/AccountPage/AccountPage.jsx
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { MainLayout } from '../components/layout';

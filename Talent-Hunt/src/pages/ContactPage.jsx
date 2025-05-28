@@ -1,4 +1,3 @@
-// src/pages/ContactPage/ContactPage.jsx
 import React, { useState } from 'react';
 import { MainLayout } from '../components/layout';
 import { motion } from 'framer-motion';
@@ -26,12 +25,10 @@ const ContactPage = () => {
     setLoading(true);
     setError(null);
 
-    // Simulate form submission
     setTimeout(() => {
       setLoading(false);
       setSuccess(true);
       
-      // Reset form data
       setFormData({
         name: '',
         email: '',

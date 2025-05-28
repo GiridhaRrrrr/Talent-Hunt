@@ -1,4 +1,3 @@
-// src/components/common/Navbar/Navbar.jsx
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -33,35 +32,36 @@ const Navbar = () => {
                 src="/logo.png" 
                 alt="Pro-Found Logo" 
               />
-<span className="ml-2 text-2xl font-black relative inline-flex group">
-  {/* Pro- section */}
-  <span className="relative overflow-hidden mr-1">
-    <span className="font-serif tracking-wider font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 animate-gradient-x inline-block transform-gpu">
-      <span className="inline-block animate-float-slow hover:animate-pulse text-3xl">P</span>
-      <span className="inline-block animate-float-medium hover:animate-pulse text-3xl">r</span>
-      <span className="inline-block animate-float-fast hover:animate-pulse text-3xl">o</span>
-    </span>
-    <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-violet-400 to-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
-  </span>
-  
-  {/* Hyphen with special effect */}
-  <span className="font-sans font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500 mx-1 animate-pulse inline-block transform-gpu hover:rotate-45 transition-transform duration-300 text-3xl">-</span>
-  
-  {/* Found section */}
-  <span className="relative overflow-hidden">
-    <span className="font-serif tracking-wider font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-rose-500 animate-gradient-x inline-block transform-gpu">
-      <span className="inline-block animate-float-fast hover:animate-pulse text-3xl">F</span>
-      <span className="inline-block animate-float-medium hover:animate-pulse text-3xl">o</span>
-      <span className="inline-block animate-float-slow hover:animate-pulse text-3xl">u</span>
-      <span className="inline-block animate-float-medium hover:animate-pulse text-3xl">n</span>
-      <span className="inline-block animate-float-fast hover:animate-pulse text-3xl">d</span>
-    </span>
-    <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-rose-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
-  </span>
-  
-  {/* Background glow effect */}
-  <span className="absolute -inset-1 bg-gradient-to-r from-violet-400/10 to-rose-400/10 blur-lg rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></span>
-</span>    </Link>
+              <span className="ml-2 text-2xl font-black relative inline-flex group">
+              {/* Pro- section */}
+              <span className="relative overflow-hidden mr-1">
+                <span className="font-serif tracking-wider font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 animate-gradient-x inline-block transform-gpu">
+                  <span className="inline-block animate-float-slow hover:animate-pulse text-3xl">P</span>
+                  <span className="inline-block animate-float-medium hover:animate-pulse text-3xl">r</span>
+                  <span className="inline-block animate-float-fast hover:animate-pulse text-3xl">o</span>
+                </span>
+                <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-violet-400 to-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
+              </span>
+              
+              {/* Hyphen with special effect */}
+              <span className="font-sans font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500 mx-1 animate-pulse inline-block transform-gpu hover:rotate-45 transition-transform duration-300 text-3xl">-</span>
+              
+              {/* Found section */}
+              <span className="relative overflow-hidden">
+                <span className="font-serif tracking-wider font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-rose-500 animate-gradient-x inline-block transform-gpu">
+                  <span className="inline-block animate-float-fast hover:animate-pulse text-3xl">F</span>
+                  <span className="inline-block animate-float-medium hover:animate-pulse text-3xl">o</span>
+                  <span className="inline-block animate-float-slow hover:animate-pulse text-3xl">u</span>
+                  <span className="inline-block animate-float-medium hover:animate-pulse text-3xl">n</span>
+                  <span className="inline-block animate-float-fast hover:animate-pulse text-3xl">d</span>
+                </span>
+                <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-rose-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
+              </span>
+              
+              {/* Background glow effect */}
+              <span className="absolute -inset-1 bg-gradient-to-r from-violet-400/10 to-rose-400/10 blur-lg rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></span>
+              </span>
+            </Link>
           </div>
 
           {/* Desktop Menu */}

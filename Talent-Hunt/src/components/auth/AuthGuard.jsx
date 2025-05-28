@@ -1,5 +1,4 @@
-// src/components/auth/AuthGuard/AuthGuard.jsx
-import React, { useEffect, useState } from 'react'; // Added useState import here
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { LoadingSpinner } from '../common';
@@ -14,7 +13,7 @@ const AuthGuard = ({ children }) => {
     // A short delay to ensure auth state is fully loaded
     const timer = setTimeout(() => {
       if (!isLoggedIn) {
-        // Redirect to login page with return URL
+        // Redirect to login page with return URL, so after login the user goes to the page again
         navigate('/login', { 
           state: { returnUrl: location.pathname } 
         });
@@ -33,7 +32,7 @@ const AuthGuard = ({ children }) => {
     );
   }
 
-  // If authenticated, render children
+  // If authenticated then render children
   return isLoggedIn ? children : null;
 };
 

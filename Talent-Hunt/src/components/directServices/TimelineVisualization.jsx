@@ -1,14 +1,11 @@
-// src/components/directService/TimelineVisualization/TimelineVisualization.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
 
 const TimelineVisualization = ({ experienceYears = 0, domain = '' }) => {
-  // Generate simple timeline based on experienceYears
   const generateTimelineItems = () => {
     const currentYear = new Date().getFullYear();
     const items = [];
     
-    // Create a single entry for the domain
     items.push({
       title: domain,
       startYear: currentYear - experienceYears,

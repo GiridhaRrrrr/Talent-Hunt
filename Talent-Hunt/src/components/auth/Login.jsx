@@ -1,4 +1,3 @@
-// src/components/auth/Login/Login.jsx
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
@@ -18,7 +17,6 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   
-  // Track field focus states for animation
   const [focusedField, setFocusedField] = useState(null);
 
   const handleChange = (e) => {
@@ -78,7 +76,6 @@ const Login = () => {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           <div className="lg:col-span-3">
             <form className="space-y-6" onSubmit={handleSubmit}>
-              {/* Email Field */}
               <div className="relative">
                 <label 
                   htmlFor="email" 
@@ -112,7 +109,6 @@ const Login = () => {
                 </div>
               </div>
 
-              {/* Password Field */}
               <div className="relative">
                 <label 
                   htmlFor="password" 
